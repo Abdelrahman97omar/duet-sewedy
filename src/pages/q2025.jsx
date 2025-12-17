@@ -78,13 +78,15 @@ var pack_6
 
 
 const QuestionsPage2025 = () => {
-  const { state } = useLocation();
-  const navigate = useNavigate();
-  const { question1, question2 } = state;
-  const choices = QUESTIONS_2025[question1].choices;
-  const [selectedChoices, setSelectedChoices] = useState({});
+const { state } = useLocation();
+const navigate = useNavigate();
+const { question1, question2 } = state;
+const choices = QUESTIONS_2025[question1].choices;
+const [selectedChoices, setSelectedChoices] = useState({});
+const [questionNumber, setQuestionNumber] = useState(1);
 
   const handleChoiceSelect = (questionIndex, choiceKey) => {
+    setQuestionNumber(2);
     setSelectedChoices((prev) => ({
       ...prev,
       [questionIndex]: choiceKey,
@@ -96,11 +98,22 @@ const QuestionsPage2025 = () => {
       <div 
       dir="rtl" 
     className="relative w-full h-screen overflow-hidden flex flex-col items-center justify-center gap-6">
-      <img
+
+    {question_number === 1 && (
+    <img
         src={BACKGROUNDS[question1]}
         alt="background"
         className="absolute inset-0 w-full h-full object-cover -z-10"
-      />
+    />
+    )}
+
+    {question_number === 2 && (
+    <img
+        src={BACKGROUNDS[question2]}
+        alt="background"
+        className="absolute inset-0 w-full h-full object-cover -z-10"
+    />
+    )}
 
 
       <div className="flex flex-col gap-4">

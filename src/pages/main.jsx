@@ -4,7 +4,7 @@ import { useRosConnection } from "./connection-provider";
 import mainpage from "../assets/Main.png";
 import startbutton from "../assets/startbutton.png";
 import HelloSound from "../assets/sounds/Hello.mp3";
-// import Timer_layout from "timer-provider";
+import Timer_layout from "./timer-provider";
 
 const main = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const main = () => {
   }, []);
 
   return (
-    // <Timer_layout>
+    <Timer_layout>
     <div className="relative w-full h-screen overflow-hidden">
 
     <img
@@ -44,7 +44,7 @@ const main = () => {
     onClick={usesInteraction}
   />
     </div>
-    // </Timer_layout>
+ </Timer_layout>
 
   );
 };
