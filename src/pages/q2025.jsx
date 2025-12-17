@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from "react-router";
 import { useState, useEffect } from "react";
-
 import Q1 from "../assets/questionPart1/1.png";
 import Q2 from "../assets/questionPart1/2.png";
 import Q3 from "../assets/questionPart1/3.png";
@@ -69,6 +68,15 @@ const BACKGROUNDS = {
   5: Q5,
 };
 
+var userResult=0
+var pack_1
+var pack_2
+var pack_3
+var pack_4
+var pack_5
+var pack_6
+
+
 const QuestionsPage2025 = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -81,6 +89,7 @@ const QuestionsPage2025 = () => {
       ...prev,
       [questionIndex]: choiceKey,
     }));
+
   };
 
     return (
@@ -102,11 +111,7 @@ const QuestionsPage2025 = () => {
               key={key}
               onClick={() => handleChoiceSelect(key)}
             className={`py-3 px-6 rounded-full text-blue-700 font-medium border-2 border-blue-700 bg-transparent hover:bg-blue-100`}
-            //   ${
-            //     isSelected
-            //       ? "bg-blue-700 text-white"
-            //       : "bg-white text-black hover:bg-gray-200"
-            //   }`}
+
             >
               {value}
             </button>

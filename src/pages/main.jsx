@@ -1,16 +1,31 @@
 import { useNavigate } from "react-router";
+import { useEffect, useRef } from "react";
 import { useRosConnection } from "./connection-provider";
 import mainpage from "../assets/Main.png";
-import startbutton from "../assets/startbutton.png"
+import startbutton from "../assets/startbutton.png";
+import HelloSound from "../assets/sounds/Hello.mp3";
 // import Timer_layout from "timer-provider";
-import { useEffect } from "react";
 
 const main = () => {
   const navigate = useNavigate();
-
+  const audioRef = useRef(null);
   const usesInteraction = () => {
+      if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
     navigate("/list2025");
   }
+  useEffect(() => {
+    audioRef.current = new Audio(HelloSound);
+    audioRef.current.play();
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+    };
+  }, []);
 
   return (
     // <Timer_layout>

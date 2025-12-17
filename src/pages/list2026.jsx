@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 // import { useRosConnection } from "./connection-provider";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
+import sound from "../assets/sounds/only2achievements.mp3"
 import bg from "../assets/questionPart2/bg.png";
 import A from "../assets/questionPart2/a.png";
 import cA from "../assets/questionPart2/cA.png";
@@ -8,8 +9,8 @@ import B from "../assets/questionPart2/b.png";
 import cB from "../assets/questionPart2/cB.png";
 import C from "../assets/questionPart2/c.png";
 import cC from "../assets/questionPart2/cC.png";
-// import D from "../assets/questionPart2/d.png";
-// import cD from "../assets/questionPart2/cD.png";
+import D from "../assets/questionPart2/d.png";
+import cD from "../assets/questionPart2/cD.png";
 import E from "../assets/questionPart2/e.png";
 import cE from "../assets/questionPart2/cE.png";
 
@@ -22,7 +23,17 @@ const List2026 = () => {
   const navigate = useNavigate();
   const { publishTopic } = useRosConnection();
   const [selectedIds, setSelectedIds] = useState([]);
-
+  const audioRef = useRef(null);
+  useEffect(() => {
+    audioRef.current = new Audio(sound);
+    audioRef.current.play();
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+    };
+  }, []);
   const handleClick = (id) => {
   setSelectedIds((prev) => {
     if (prev.includes(id)) return prev; 
@@ -30,6 +41,26 @@ const List2026 = () => {
     const updated = [...prev, id];
 
     if (updated.length === 2) {
+        setSelectedIds((prev) => {
+    if (prev.includes(id)) return prev; 
+
+    const updated = [...prev, id];
+
+    if (updated.length === 2) {
+      if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+      navigate("/q2026", {
+        state: {
+          question1: updated[0],
+          question2: updated[1],
+        },
+      });
+    }
+
+    return updated;
+  });
       navigate("/q2026", {
         state: {
           question1: updated[0],
@@ -54,11 +85,11 @@ const List2026 = () => {
       id: 3,
       defaultImg: C, 
       activeImg: cC, }, 
-    // { 
-    //   id: 4, 
-    //   defaultImg: D, 
-    //   activeImg: cD, 
-    // },
+    { 
+      id: 4, 
+      defaultImg: D, 
+      activeImg: cD, 
+    },
     { 
       id: 5, 
       defaultImg: E, 
@@ -66,24 +97,6 @@ const List2026 = () => {
     }, 
   ];
 
-
-  // useEffect(() => {
-  //   const audio = new Audio(sound);
-  //   audio.play();
-  //   publishTopic("/emoji", "std_msgs/Int32", {
-  //     data: 2,
-  //   });
-  //   audio.onended = () => {
-  //     navigate("/thankyou");
-  //   };
-
-  //   return () => {
-  //     publishTopic("/emoji", "std_msgs/Int32", { data: 1 });
-  //     audio.pause();
-  //     audio.currentTime = 0;
-  //   };
-
-  // }, []);
 
   return (
     <Timer_layout>

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 // import { useRosConnection } from "./connection-provider";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
+import sound from "../assets/sounds/only2challenges.mp3"
 import bg from "../assets/questionPart1/bg.png";
 import A from "../assets/questionPart1/a.png";
 import cA from "../assets/questionPart1/cA.png";
@@ -18,7 +19,18 @@ import Timer_layout from "./timer-provider";
 import { useRosConnection } from "./connection-provider";
 
 const List2025 = () => {
+const audioRef = useRef(null);
 
+  useEffect(() => {
+    audioRef.current = new Audio(sound);
+    audioRef.current.play();
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+    };
+  }, []);
   const navigate = useNavigate();
   const { publishTopic } = useRosConnection();
   const [selectedIds, setSelectedIds] = useState([]);
@@ -30,6 +42,10 @@ const List2025 = () => {
     const updated = [...prev, id];
 
     if (updated.length === 2) {
+      if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
       navigate("/q2025", {
         state: {
           question1: updated[0],
